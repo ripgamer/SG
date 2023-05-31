@@ -1,5 +1,6 @@
 //code by ak
-//git repo  
+//SPEED GUN (SG)
+//git repo  github.com/ripgamer/SG
 #include <LiquidCrystal.h>
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2); 
  
