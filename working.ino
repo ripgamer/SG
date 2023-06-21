@@ -1,7 +1,35 @@
 //code by ak
 //https://github.com/ripgamer/SD
-//working 16x2 SDA@A04 SCL@A05 , vcc1@8 , vcc2@9, buzzer@13 ,BT1@A01,BT2@A01 v01
 #include <LCD_I2C.h>
+#define BLYNK_TEMPLATE_ID "TMPL3oPKoZBcz"
+#define BLYNK_TEMPLATE_NAME "led"
+#define BLYNK_AUTH_TOKEN "o2UZlCZY_IA28AGr-H7gkuoyEfTuazbr"
+
+/* Comment this out to disable prints and save space */
+#define BLYNK_PRINT Serial
+
+
+#include <ESP8266_Lib.h>
+#include <BlynkSimpleShieldEsp8266.h>
+
+// Your WiFi credentials.
+// Set password to "" for open networks.
+char ssid[] = "ESP";
+char pass[] = "87654321";
+
+// Hardware Serial on Mega, Leonardo, Micro...
+//#define EspSerial Serial1
+
+// or Software Serial on Uno, Nano...
+#include <SoftwareSerial.h>
+SoftwareSerial EspSerial(2, 3); // RX, TX
+
+// Your ESP8266 baud rate:
+#define ESP8266_BAUD 9600
+int GAUGE_VPIN V1;
+bool ledState = false;
+
+ESP8266 wifi(&EspSerial);
 LCD_I2C lcd(0x27, 16, 2);// Default address of most PCF8574 modules
 
 int timer1;
@@ -14,6 +42,7 @@ int flag2 = 0;
 
 float distance = 5.0;
 float speed;
+int scalingFactor = 1;
 
 int ir_s1 = A0;
 int ir_s2 = A1;
@@ -23,6 +52,7 @@ int vcc1 = 8;
 int vcc2 = 9;
 
 void setup(){
+  
   pinMode(ir_s1, INPUT);
   pinMode(ir_s2, INPUT);
   pinMode(buzzer, OUTPUT);
@@ -30,7 +60,9 @@ void setup(){
   pinMode(vcc2, OUTPUT);
   digitalWrite(vcc1,HIGH);
   digitalWrite(vcc2,HIGH);
-  Serial.begin(9600);
+  Serial.begin(74880);
+  
+  
   
   lcd.begin();
   lcd.backlight();
@@ -39,12 +71,18 @@ void setup(){
   lcd.print(" WELCOME To SDS");
   lcd.setCursor(0,1);
   lcd.print("SPEED DETECTOR");
-  delay(2000);
+  delay(10);
   lcd.clear();
+  // Set ESP8266 baud rate
+  EspSerial.begin(ESP8266_BAUD);
+  delay(10);
+  Blynk.begin(BLYNK_AUTH_TOKEN, wifi, ssid, pass, "blynk.cloud", 80);
+  //Blynk.virtualWrite(V1,speed);
 }
 
 void loop() {
-
+ 
+Blynk.virtualWrite(GAUGE_VPIN,speed);
 if(digitalRead (ir_s1) == LOW && flag1==0){timer1 = millis(); flag1=1;}
 
 if(digitalRead (ir_s2) == LOW && flag2==0){timer2 = millis(); flag2=1;}
@@ -56,6 +94,8 @@ else if(timer2 > timer1){Time = timer2 - timer1;}
  speed=(distance/Time);//v=d/t
  speed=speed*3600;//multiply by seconds per hr
  speed=speed/1000;//division by meters per Km
+ 
+ 
 }
 
 if(speed==0){ 
@@ -106,8 +146,17 @@ else{
   }    
     delay(3000);
     digitalWrite(buzzer, LOW);
+    
     speed = 0;
     flag1 = 0;
     flag2 = 0;    
  }
+  //speed update (speedometer)
+  // Update Blynk
+  // int gaugeValue = static_cast<int>(speed* scalingFactor);
+
+  // // Update gauge widget
+  // Blynk.virtualWrite(GAUGE_VPIN,speed);
+
+  
 }
