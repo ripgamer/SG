@@ -26,7 +26,7 @@ SoftwareSerial EspSerial(2, 3); // RX, TX
 
 // Your ESP8266 baud rate:
 #define ESP8266_BAUD 9600
-int GAUGE_VPIN V1;
+#define GAUGE_VPIN V1
 bool ledState = false;
 
 ESP8266 wifi(&EspSerial);
@@ -82,7 +82,7 @@ void setup(){
 
 void loop() {
  
-Blynk.virtualWrite(GAUGE_VPIN,speed);
+//Blynk.virtualWrite(GAUGE_VPIN,speed);
 if(digitalRead (ir_s1) == LOW && flag1==0){timer1 = millis(); flag1=1;}
 
 if(digitalRead (ir_s2) == LOW && flag2==0){timer2 = millis(); flag2=1;}
@@ -137,20 +137,25 @@ else{
         lcd.backlight();
     }
     Serial.println("  Over Speeding  ");
+    // Update gauge widget
+    Blynk.virtualWrite(GAUGE_VPIN,speed);
   }
   else
   {
     lcd.backlight();
     lcd.print("  Normal Speed   ");
     Serial.println("  Normal Speed   "); 
+    // Update gauge widget
+    Blynk.virtualWrite(GAUGE_VPIN,speed);
   }    
     delay(3000);
     digitalWrite(buzzer, LOW);
-    
+    Blynk.virtualWrite(GAUGE_VPIN,speed);
     speed = 0;
     flag1 = 0;
     flag2 = 0;    
  }
+ 
   //speed update (speedometer)
   // Update Blynk
   // int gaugeValue = static_cast<int>(speed* scalingFactor);
