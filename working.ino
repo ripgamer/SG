@@ -40,7 +40,7 @@ float Time;
 int flag1 = 0;
 int flag2 = 0;
 
-float distance = 5.0;
+float distance = 4.5;
 float speed;
 int scalingFactor = 1;
 
@@ -64,24 +64,26 @@ void setup(){
   
   
   
-  lcd.begin();
+   lcd.begin();
   lcd.backlight();
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print(" WELCOME To SDS");
+  lcd.print("G14 G25 G03 G01 G40");
   lcd.setCursor(0,1);
-  lcd.print("SPEED DETECTOR");
-  delay(10);
-  lcd.clear();
-  // Set ESP8266 baud rate
+  lcd.print("connecting...");
+  delay(500);
+ // Set ESP8266 baud rate
   EspSerial.begin(ESP8266_BAUD);
   delay(10);
+  
   Blynk.begin(BLYNK_AUTH_TOKEN, wifi, ssid, pass, "blynk.cloud", 80);
   //Blynk.virtualWrite(V1,speed);
+  lcd.clear();
 }
 
 void loop() {
- 
+
+
 //Blynk.virtualWrite(GAUGE_VPIN,speed);
 if(digitalRead (ir_s1) == LOW && flag1==0){timer1 = millis(); flag1=1;}
 
@@ -113,7 +115,7 @@ else
   Serial.println("Searching...    ");
 }
 else{
-    lcd.backlight();
+    //lcd.backlight();
     lcd.clear(); 
     lcd.setCursor(0, 0); 
     lcd.print("Speed:");
@@ -122,7 +124,7 @@ else{
     Serial.println(speed,1);
     lcd.print("Km/Hr  ");
     Serial.println("Km/Hr  ");
-    lcd.setCursor(0, 1); 
+    lcd.setCursor(0, 1);
   if(speed > 50)
   {
     lcd.print("  Over Speeding  ");
