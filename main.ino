@@ -1,5 +1,5 @@
 //code by ak
-//https://github.com/ripgamer/SD
+//https://github.com/ripgamer/SG
 #include <LCD_I2C.h>
 #define BLYNK_TEMPLATE_ID "ADD YOUR TEMPLATE_ID HERE"
 #define BLYNK_TEMPLATE_NAME "<ADD YOUR TEMPLATE NAME HERE>"
