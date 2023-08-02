@@ -1,4 +1,4 @@
-//code by ak
+//code by aakash
 //https://github.com/ripgamer/SG
 #include <LCD_I2C.h>
 #define BLYNK_TEMPLATE_ID "ADD YOUR TEMPLATE_ID HERE"
