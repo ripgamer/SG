@@ -1,9 +1,9 @@
 //code by ak
 //https://github.com/ripgamer/SD
 #include <LCD_I2C.h>
-#define BLYNK_TEMPLATE_ID "TMPL3oPKoZBcz"
-#define BLYNK_TEMPLATE_NAME "led"
-#define BLYNK_AUTH_TOKEN "o2UZlCZY_IA28AGr-H7gkuoyEfTuazbr"
+#define BLYNK_TEMPLATE_ID "ADD YOUR TEMPLATE_ID HERE"
+#define BLYNK_TEMPLATE_NAME "<ADD YOUR TEMPLATE NAME HERE>"
+#define BLYNK_AUTH_TOKEN "<ADD YOUR AUTH_TOKEN HERE>"
 
 /* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
@@ -14,8 +14,8 @@
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "ESP";
-char pass[] = "87654321";
+char ssid[] = "<SSID>";
+char pass[] = "<PASS>";
 
 // Hardware Serial on Mega, Leonardo, Micro...
 //#define EspSerial Serial1
