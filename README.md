@@ -24,7 +24,7 @@ The speed value is displayed on a Blynk app gauge widget. To use this code, you 
 
 ## Speed Calculation ⏱️
 
-The speed is calculated based on the time taken by a vehicle to pass between the two IR sensors, assuming a fixed distance of 4.5 meters between the sensors. The calculated speed is displayed on both the LCD display and the Blynk gauge.
+The speed is calculated based on the time taken by a vehicle to pass between the two IR sensors, assuming a fixed distance of 5 cm between the sensors. The calculated speed is displayed on both the LCD display and the Blynk gauge.
 
 ## LCD Display 🖥️
 
